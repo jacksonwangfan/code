@@ -26,8 +26,12 @@ public class 从尾到头打印链表 {
         node2.next = node3;
         node3.next = node4;
 
-        Arrays.stream(Arrays.stream(reversePrint(node1)).toArray()).forEach(System.out::println);
-
+        //Arrays.stream(Arrays.stream(reversePrint(node1)).toArray()).forEach(System.out::println);
+        //Arrays.stream(reversePrint(node1)).forEach(System.out::println);
+        int[] ints = reversePrint(node1);
+        for (int i = 0; i < ints.length; i++) {
+            System.out.println(ints[i]);
+        }
 
     }
 
@@ -36,14 +40,18 @@ public class 从尾到头打印链表 {
     public static int[] reversePrint(ListNode head) {
         //这里使用翻转链表，栈的方式省略。。练习链表翻转代码
         ListNode listNode = flipList(head);
+        ListNode flip_head = listNode;
         int count = 0;
         while (listNode != null) {
             count++;
             listNode = listNode.next;
         }
+        listNode = flip_head;
         int[] res = new int[count];
+
+        int i = 0;
         while (listNode != null) {
-            res[count--] = listNode.val;
+            res[i++] = listNode.val;
             listNode = listNode.next;
         }
         return res;
@@ -56,17 +64,17 @@ public class 从尾到头打印链表 {
         }
 
         ListNode curr = head;
-        ListNode nxt = head.next;
+        ListNode nxt = null;
         ListNode pre = null;
 
-        while(nxt != null){
-            pre = nxt.next;
-            nxt.next = curr;
+        while(curr != null){
+            nxt = curr.next;
+            curr.next = pre;
+            pre = curr;
             curr = nxt;
-            nxt = pre;
         }
-        head.next = null;
-        return curr;
+
+        return pre;
     }
 
     public static void print(ListNode head) {
