@@ -29,8 +29,9 @@ import java.util.Stack;
  * [5,8,4,5]
  * ]
  */
+
 public class 二叉树中和为某一值的路径 {
-    //思路先序遍历，在元素出栈的时候我们计算一下栈里的和是多少，若等于sum将栈转化为 数组，并添加到结果中
+    //思路先序遍历，在遍历到叶子节点的时候 我们计算一下栈里的和是多少，若等于sum将栈转化为 数组，并添加到结果中  //此方法太繁琐了，，换递归吧。。。。。
     public List<List<Integer>> pathSum(TreeNode root, int sum) {
         List<List<Integer>> lists = new ArrayList<>();
         List<Integer> list = null;
