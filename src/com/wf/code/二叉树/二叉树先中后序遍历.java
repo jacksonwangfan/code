@@ -8,7 +8,7 @@ import java.util.*;
  * @auter wf
  * @date 2020/12/19
  */
-public class 非递归先序遍历 {
+public class 二叉树先中后序遍历 {
 
     public static void main(String[] args) {
         TreeNode node1 = new TreeNode(1);
