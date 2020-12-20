@@ -1,9 +1,5 @@
 package com.wf.code.二叉树;
 
-import javafx.scene.layout.Priority;
-import sun.reflect.generics.tree.Tree;
-
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -35,12 +31,12 @@ public class 二叉搜索树的第k大节点 {
         List<TreeNode> preList = pre(root, list);
         for (TreeNode node : preList) {
             if (smallHeap.size() == k) {
-                if (node.value > smallHeap.peek()) {
+                if (node.val > smallHeap.peek()) {
                     smallHeap.poll();
-                    smallHeap.add(node.value);
+                    smallHeap.add(node.val);
                 }
             } else {
-                smallHeap.add(node.value);
+                smallHeap.add(node.val);
             }
         }
         return smallHeap.peek();
@@ -49,7 +45,7 @@ public class 二叉搜索树的第k大节点 {
     public static int kth2(TreeNode root,int k){
         List<TreeNode> list = new ArrayList();
         List<TreeNode> list1 = midOrder(root, list);
-        return list1.get(list1.size()-k).value;
+        return list1.get(list1.size()-k).val;
     }
 
     //中序遍历方法，为了练习我们就写非递归遍历吧
