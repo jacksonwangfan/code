@@ -20,7 +20,7 @@ public class 数组中重复的数字 {
     public static void main(String[] args) {
 
     }
-
+    //因为这个数字是有范围的，所以新建数组，以数字作为数组下标平铺时间复杂度O(1) 空间复杂度O(n)
     public static int findRepeatNumber(int[] nums) {
         int temp = -1;
         int arr[] = new int[nums.length];
