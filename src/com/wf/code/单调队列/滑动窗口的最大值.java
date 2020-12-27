@@ -26,7 +26,7 @@ public class 滑动窗口的最大值 {
         Deque<Integer> deque = new LinkedList();
         if (nums.length == 0) return res;
         int index = 0;
-        for (int i = 1; i < nums.length; i++) {
+        for (int i = 0; i < nums.length; i++) {
             //队首元素不能过期，为什么只能担心队首元素不能过期呢，因为每循环一次 我们都取队首元素作为 窗口内的最大值
             // i-deque.peekFirst() 判断队首元素距离窗口长度 ，如果长度大于窗口长度那么移除队首元素
             //为什么不用判断队首的后一个元素也过期了呢，因为我们每次入队的时候只是入了一个元素，由于窗口大小固定，那么过期元素最多也只能是一个，
