@@ -31,7 +31,7 @@ public class 滑动窗口的最大值 {
             // i-deque.peekFirst() 判断队首元素距离窗口长度 ，如果长度大于窗口长度那么移除队首元素
             //为什么不用判断队首的后一个元素也过期了呢，因为我们每次入队的时候只是入了一个元素，由于窗口大小固定，那么过期元素最多也只能是一个，
             //所以只用从队首开始判断第一个元素是否过期就可以。
-            if (!deque.isEmpty() && i-deque.peekFirst() > k) {
+            if (!deque.isEmpty() && i-deque.peekFirst() >= k) {
                 deque.pollFirst();
             }
             //开始向单调队列中添加
