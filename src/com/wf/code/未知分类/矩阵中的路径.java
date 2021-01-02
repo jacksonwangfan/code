@@ -28,5 +28,30 @@ package com.wf.code.未知分类;
  *
  */
 public class 矩阵中的路径 {
+    public boolean exist(char[][] board, String word) {
+        if (board.length==0) return false;
+
+        char[] wordArr = word.toCharArray();
+        int index = 0;
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                //找到第一个就送当前位置开始判断右边和下边
+                if (wordArr[index++] == board[i][j]) {
+                    //右边不能出界
+                    if (j+1>=board[i].length) return false;
+                    //右边
+                    if (wordArr[index++] == board[i][j+1]) {
+
+                    }
+                    //下边不能出界
+                    if (i+1>=board.length) return false;
+                    //下边
+                    if (wordArr[index++] == board[i][j+1]) {
+
+                    }
+                }
+            }
+        }
+    }
 
 }
