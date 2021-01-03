@@ -1,4 +1,4 @@
-package com.wf.code.未知分类.链表;
+package com.wf.code.链表;
 
 /**
  * 输入一个链表的头节点，从尾到头反过来返回每个节点的值（用数组返回）。
