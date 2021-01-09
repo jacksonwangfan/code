@@ -23,7 +23,7 @@ public class TreeNode {
 
     /**
      * 按照二叉树树形结构打印二叉树
-     *  https://www.cnblogs.com/liulaolaiu/p/11744409.html 感谢这位热心网友
+     *  https://www.cnblogs.com/liulaolaiu/p/11744409.html 感谢大佬
      * @param root
      */
     public static void print(TreeNode root){
