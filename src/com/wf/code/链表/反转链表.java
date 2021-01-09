@@ -5,4 +5,7 @@ package com.wf.code.链表;
  * @date 2021/1/9
  */
 public class 反转链表 {
+   public void  filpNodeList(Node head){
+
+   }
 }
