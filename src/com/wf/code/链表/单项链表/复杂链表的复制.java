@@ -1,4 +1,4 @@
-package com.wf.code.链表;
+package com.wf.code.链表.单项链表;
 
 import java.util.HashMap;
 import java.util.Map;
