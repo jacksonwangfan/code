@@ -86,7 +86,7 @@ public class 二叉树先中后序遍历 {
         return list;
     }
 
-    //后续遍历、
+    //后序遍历、
     public static List postOrder(TreeNode root) {
         List<TreeNode> list = new LinkedList();
         Stack<TreeNode> stack = new Stack();
@@ -111,4 +111,24 @@ public class 二叉树先中后序遍历 {
         }
         return list;
     }
+
+    /******************************************二叉树遍历模板代码（先 中）***************************************************/
+    //先序
+    public void pre(TreeNode root){
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode curr = root;
+        while (!stack.isEmpty() || curr!=null){
+                while (curr!=null){
+                    stack.push(curr);
+                    //在这一行访问是元素curr就是先序
+                    curr = curr.left;
+                }
+                curr = stack.pop();
+                //在这一行访问元素curr就是中序
+                curr = curr.right;
+        }
+    }
+    /******************************************二叉树遍历模板代码（后）***************************************************/
+
+
 }

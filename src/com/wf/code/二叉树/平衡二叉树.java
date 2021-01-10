@@ -15,16 +15,23 @@ public class 平衡二叉树 {
 
 
     public static void main(String[] args) {
-        TreeNode node1 = new TreeNode(1);
-        TreeNode node2 = new TreeNode(2);
-        TreeNode node3 = new TreeNode(3);
-        TreeNode node4 = new TreeNode(4);
+        /*
+         *        5
+         *      3   8
+         *    0   4
+         *          5
+         * */
+        TreeNode node1 = new TreeNode(5);
+        TreeNode node2 = new TreeNode(3);
+        TreeNode node3 = new TreeNode(8);
+        TreeNode node4 = new TreeNode(0);
         node1.left = node2;
         node1.right = node3;
         node2.left = node4;
-        node4.left = new TreeNode(9);
-        //node2.right = new TreeNode(5);
+        node2.right = new TreeNode(4);
+        node2.right.right = new TreeNode(5);
         System.out.println(isBalance(node1));
+        System.out.println(isBalence(node1));
     }
 
     //定义左子树和右子树高度相差不为一的树为左子树
@@ -50,6 +57,16 @@ public class 平衡二叉树 {
     public static int  hight(TreeNode node){
         if (node==null) return 0;
          else return Math.max(hight(node.left)+1,hight(node.right)+1);
+    }
+    /***********************二刷****************************/
+    public static boolean isBalence(TreeNode node ){
+        if (node==null) return true;
+        return Math.abs(getHeight(node.left)-getHeight(node.right))<=1;
+    }
+
+    public  static int getHeight(TreeNode node){
+        if (node==null) return 0;
+        return Math.max(getHeight(node.left)+1,getHeight(node.right)+1);
     }
 
 }

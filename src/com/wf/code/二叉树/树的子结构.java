@@ -59,5 +59,16 @@ public class 树的子结构 {
         return A.val == B.val && helper(A.left, B.left) && helper(A.right, B.right);
     }
 
+    /****************************树的子结构 二刷*********************************/
+    public static boolean isSub(TreeNode root,TreeNode sub){
+    return false;
+    }
+
+    //从第一个相等的节点开始，判断是否是子树
+    public static boolean helper1(TreeNode a,TreeNode b){
+        if(b==null) return true;
+        return false;
+    }
+
 
 }

@@ -9,6 +9,11 @@ import java.util.*;
 public class 二叉搜索树的第k大节点 {
 
     public static void main(String[] args) {
+        /*
+        *        5
+        *      3   8
+        *    0   4
+        * */
         TreeNode node1 = new TreeNode(5);
         TreeNode node2 = new TreeNode(3);
         TreeNode node3 = new TreeNode(8);
@@ -19,6 +24,7 @@ public class 二叉搜索树的第k大节点 {
         node2.right = new TreeNode(4);
         System.out.println(kth2(node1, 2));
         System.out.println(kth(node1, 2));
+        System.out.println(kth1(node1, 1).val);
     }
 
     //第一种方法利用一个PriorityQueue 构造大顶堆实现
@@ -74,5 +80,27 @@ public class 二叉搜索树的第k大节点 {
         pre(root.right, list);
         return list;
     }
+    /****************************二刷*****************************/
+   public static TreeNode kth1(TreeNode root,int k){
+       List<TreeNode> list = midSearch(root);
+       return list.get(list.size()-k);
+   }
+   //二叉树中序遍历
+   public static List<TreeNode> midSearch(TreeNode root){
+       if (root==null) return null;
+       TreeNode curr = root;
+       ArrayList<TreeNode> list = new ArrayList();
+       Stack<TreeNode> stack = new Stack();
+       while (!stack.isEmpty() || curr!=null){
+           while (curr!=null){
+               stack.push(curr);
+               curr = curr.left;
+           }
+           curr = stack.pop();
+           list.add(curr);
+           curr = curr.right;
+       }
+       return list;
+   }
 
 }
