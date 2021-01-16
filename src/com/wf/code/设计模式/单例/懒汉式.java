@@ -5,10 +5,10 @@ package com.wf.code.设计模式.单例;
  * @date 2021/1/10
  */
 public class 懒汉式 {
-    private static 饿汉式 instance;
+    private static 懒汉式 instance;
     private 懒汉式(){}
     //线程不安全
-    public static 饿汉式 getInstance(){
+    public static 懒汉式 getInstance(){
         if (instance==null) return instance;
         else return instance;
     }
