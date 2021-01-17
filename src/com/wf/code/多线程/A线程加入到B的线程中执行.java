@@ -7,15 +7,16 @@ import java.util.concurrent.TimeUnit;
  * @date 2021/1/9
  */
 public class A线程加入到B的线程中执行 {
+   public static A a = new A();
+   public static B b = new B();
     public static void main(String[] args) {
-        A a = new A();
         a.start();
+        b.start();
     }
 
     public static class A extends Thread{
         public void run(){
-            B b = new B();
-            b.start();
+
             System.out.println(1);
             try {
                 b.join();
