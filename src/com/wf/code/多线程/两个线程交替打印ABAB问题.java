@@ -8,7 +8,7 @@ import org.junit.Test;
  */
 public class 两个线程交替打印ABAB问题 {
 
-    public static Object object = new Object();
+    private static final Object object = new Object();
 
     public static void main(String[] args) {
         myThreadA myThreadA = new myThreadA();

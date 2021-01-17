@@ -1,6 +1,6 @@
 package com.wf.code.链表.单项链表;
 
-public class Node {
+public class  Node {
     int val;
     Node next;
     public Node(int val){
