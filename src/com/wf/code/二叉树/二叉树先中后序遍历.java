@@ -26,6 +26,9 @@ public class 二叉树先中后序遍历 {
         postOrder(node1).stream().forEach(i -> {
             System.out.println(i);
         });
+        postOrder1(node1).stream().forEach(i -> {
+            System.out.println(i);
+        });
 
 
     }
@@ -129,6 +132,30 @@ public class 二叉树先中后序遍历 {
         }
     }
     /******************************************二叉树遍历模板代码（后）***************************************************/
+
+    public static List<TreeNode> postOrder1(TreeNode root){
+            Stack<TreeNode> stack = new Stack();
+            List<TreeNode> list = new ArrayList();
+            TreeNode curr = root;
+            TreeNode pre = null;
+            while (!stack.isEmpty() || curr!=null){
+                while (curr!=null){
+                    stack.push(curr);
+                    curr = curr.left;
+                }
+                TreeNode temp = stack.peek();
+                if (temp.right==null || temp.right==pre){
+                    //add
+                    list.add(temp);
+                    pre = temp;
+                    stack.pop();
+                    curr = null;
+                }else {
+                    curr = temp.right;
+                }
+            }
+            return list;
+    }
 
 
 }
