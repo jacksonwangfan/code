@@ -22,7 +22,8 @@ public class Caller {
         l1.hanle(new Leave(15,"em15"));
         l1.hanle(new Leave(30,"em15"));
         l1.hanle(new Leave(31,"em15"));
-        /** 执行结果
+        /**
+         * 执行结果：
          * 小领导批准，请假2天
          * 大领导批准，请假7天
          * 大领导批准，请假10天
