@@ -7,7 +7,6 @@ package com.wf.code.设计模式.适配器模式.类适配模式;
  */
 public class Callear {
     public static void main(String[] args) {
-        AndroidLine androidLine = new AndroidLine();
         Anddroid_iPhone_Adapter anddroid_iPhone_adapter = new Anddroid_iPhone_Adapter();
         anddroid_iPhone_adapter.charging_Cable();
     }
