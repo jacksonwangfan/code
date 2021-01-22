@@ -26,12 +26,9 @@ package com.wf.code.前缀树;
  * @date 2021/1/22
  */
 public class Trie {
-    private Trie root;
-    private boolean isEnd;
-    private int count;
-    private Trie[] dicttro;
-    private Trie next;
-
+    //这里说明一下，实际上这个就是一个数组里面包了一个数组，一直包下去
+    Trie[] arr = new Trie[26];
+    boolean isEnd = false;
 /**
  * Your Trie object will be instantiated and called as such:
  * Trie obj = new Trie();
@@ -42,31 +39,46 @@ public class Trie {
 
     /** Initialize your data structure here. */
     public Trie() {
-            isEnd = true;
-            count = 0;
-            dicttro = new Trie[26];
-            root = new Trie();
     }
 
     /** Inserts a word into the trie. */
     public void insert(String word) {
-        Trie curr = root;
-
+        Trie curr = this;
+        for (int i = 0; i < word.length(); i++) {
+            int c = word.charAt(i)-'a';
+            if (curr.arr[c]==null) curr.arr[c] = new Trie();
+            curr = curr.arr[c];
+        }
+        curr.isEnd = true;
     }
 
     /** Returns if the word is in the trie. */
     public boolean search(String word) {
-        return false;
+        Trie curr = this;
+        for (int i = 0; i < word.length(); i++) {
+            int c = word.charAt(i)-'a';
+            if (curr.arr[c]==null) return false;
+            curr = curr.arr[c];
+        }
+        return curr.isEnd;
     }
 
     /** Returns if there is any word in the trie that starts with the given prefix. */
     public boolean startsWith(String prefix) {
-        return false;
+        Trie curr = this;
+        for (int i = 0; i < prefix.length(); i++) {
+            int c = prefix.charAt(i)-'a';
+            if (curr.arr[c]==null) return false;
+            curr = curr.arr[c];
+        }
+        return true;
     }
 
 
     public static void main(String[] args) {
         Trie trie = new Trie();
-        trie.insert("afcg");
+        trie.insert("afcgjklkjljkl");
+        System.out.println(trie.search("afcgjklkjljkl"));
+        System.out.println(trie.startsWith(""));
     }
 }
