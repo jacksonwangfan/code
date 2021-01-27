@@ -156,6 +156,28 @@ public class 二叉树先中后序遍历 {
             }
             return list;
     }
+    /*********************************************下面纯属练习区域**********************************************************/
+    public void postOrder2(TreeNode root){
+        if (root==null) return;
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode curr = root;
+        TreeNode pre = null;
+        while(!stack.isEmpty() || curr!=null){
+            while (curr!=null){
+                stack.push(curr);
+                curr = curr.left;
+            }
+            TreeNode temp = stack.peek();
+            if (temp.right==null || temp.right==pre){
+                System.out.println(temp);
+                pre = temp;
+                stack.pop();
+                curr = null;
+            }else {
+                curr = curr.right;
+            }
+        }
+    }
 
 
 }
