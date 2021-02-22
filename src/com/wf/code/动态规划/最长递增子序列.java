@@ -24,7 +24,7 @@ public class 最长递增子序列 {
     }
 
     public static void main(String[] args) {
-        int[] arr = {2};
+        int[] arr = {2,1,5,3,6,4,8,9,7};
         System.out.println(getLIS(arr));
     }
 
