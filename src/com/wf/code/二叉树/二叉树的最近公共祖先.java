@@ -10,22 +10,28 @@ public class 二叉树的最近公共祖先 {
 
     public static void main(String[] args) {
         /*
-         *        5
-         *      3   8
-         *    0   4
+         *          5
+         *      3      8
+         *    0   4      10
+         *                  20
          * */
         TreeNode node1 = new TreeNode(5);
         TreeNode node2 = new TreeNode(3);
         TreeNode node3 = new TreeNode(8);
         TreeNode node4 = new TreeNode(0);
+       TreeNode node10 = new TreeNode(10);
+       TreeNode node20 = new TreeNode(20);
         node1.left = node2;
         node1.right = node3;
         node2.left = node4;
         node2.right = new TreeNode(4);
+        node3.right= node10;
+        node10.right= node20;
         System.out.println(lowestCommonAncestor(node1, node4, node3));
         System.out.println(lowestCommonAncestor1(node1, node3, node4));
         System.out.println(lowestCommonAncestor(node1, node4, null));
         System.out.println(lowestCommonAncestor1(node1, node4, node4));
+        System.out.println(lowestCommonAncestor(node1,node4,node20));
     }
 
    public static TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
