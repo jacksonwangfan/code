@@ -1,5 +1,7 @@
 package com.wf.code.二叉树;
 
+import sun.security.provider.Sun;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -31,40 +33,23 @@ import java.util.Stack;
  */
 
 public class 二叉树中和为某一值的路径 {
-    //思路先序遍历，在遍历到叶子节点的时候 我们计算一下栈里的和是多少，若等于sum将栈转化为 数组，并添加到结果中  //此方法太繁琐了，，换递归吧。。。。。
+    List<List<Integer>> res = new LinkedList<>();
+    LinkedList<Integer> path = new LinkedList<>();
+    //思路先序遍历，在遍历到叶子节点的时候 我们计算一下栈里的和是多少，若等于sum将栈转化为 数组，并添加到结果中
     public List<List<Integer>> pathSum(TreeNode root, int sum) {
-        List<List<Integer>> lists = new ArrayList<>();
-        List<Integer> list = null;
-        Stack<TreeNode> stack = new Stack<>();
-        Stack<TreeNode> stack1 = new Stack<>();
-        TreeNode curr = root;
-        long value = 0;
-        while (!stack.isEmpty() || curr != null) {
-            while (curr != null) {
-                stack.push(curr);
-                curr = curr.left;
-            }
-
-            curr = stack.peek();
-            curr = curr.right;
-            if (curr == null) {
-                if (!stack.isEmpty()) {
-                    value += stack.peek().val;
-                    stack1.add(stack.pop());
-                }
-                if (value == sum) {
-                    Integer size = stack.size();
-                    list = new ArrayList<>(size);
-                    for (Integer i = 0; i < size; i++) {
-                        list.add(i, stack1.peek().val);
-                        stack.add(stack1.pop());
-                    }
-                }
-                lists.add(list);
-            }
-            //栈计算完了之后 在pop()
-            stack.pop();
-        }
-        return lists;
+        pre(root, sum);
+        return res;
     }
+
+   public  void pre(TreeNode root,int tar){
+        if (root==null) return;
+        tar-=root.val;
+        path.add(root.val);
+        if (root.left==null && root.right==null && tar==0){
+            res.add(new LinkedList<>(path));
+        }
+        pre(root.left,tar);
+        pre(root.right,tar);
+        tar =tar+ path.removeLast();
+   }
 }
