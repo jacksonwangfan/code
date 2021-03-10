@@ -1,34 +1,33 @@
 package com.wf.test;
 
 
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
-
 /**
  * @auter wf
  * @date 2021/2/25
  */
 public class Demo {
-    String name ;
-
     public static void main(String[] args) {
-        try {
-            String s = new String("jhghgjkh".getBytes(), "UTF-8");
-            System.out.println(s);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        System.out.println("the sky      is bule".split(" ").length);
-        Demo demo = new Demo();
-        demo.name = "测试";
-        Demo demo1 = demo.getDemo();
-
-        System.out.println(demo.name);
-        System.out.println(demo1.name);
-        System.out.println(demo1==demo);
+        int[] arr = {1,3,4,56,78,99,101,102};
+        System.out.println(findMax(arr));
     }
 
-    public Demo getDemo(){
-        return this;
+   static int findMax(int [] array){
+        if (array==null || array.length==0) return -1;
+       int left = 0;
+       int right = array.length-1;
+       while (left<right){
+           int mid = left+(right-left)/2;
+           int max = array[mid];
+           if (array[mid+1]<max && array[mid-1]<max){
+               return array[mid];
+           }
+           //说明是递增的。
+           if (array[mid]<array[mid+1]){
+               left = mid+1;
+           }else {
+               right = mid-1;
+           }
+       }
+       return -1;
     }
 }
