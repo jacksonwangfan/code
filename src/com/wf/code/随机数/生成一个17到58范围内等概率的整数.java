@@ -46,4 +46,8 @@ public class 生成一个17到58范围内等概率的整数 {
         }
     }
 
+    public static void main(String[] args) {
+        System.out.println("Mac test");
+    }
+
 }
