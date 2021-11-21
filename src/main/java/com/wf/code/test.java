@@ -1,5 +1,7 @@
 package com.wf.code;
 
+import org.openjdk.jol.info.ClassLayout;
+
 import java.lang.instrument.Instrumentation;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -12,10 +14,13 @@ import java.util.stream.Stream;
 public class test {
 
     public static void main(String[] args) throws Exception {
-        T1 T1 = new T1();
+        Object o = new Object();
+        System.out.println(ClassLayout.parseInstance(o).toPrintable());
+        
+        /*T1 T1 = new T1();
         T2 t2 = new T2();
         T1.start();
-        t2.start();
+        t2.start();*/
 
 
 
