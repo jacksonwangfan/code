@@ -38,7 +38,6 @@ public class 用两个栈实现队列 {
         } else {
             return stackB.pop();
         }
-
     }
 
     //入栈
