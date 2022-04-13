@@ -15,34 +15,42 @@ public class 给一个数组去掉空格之后的字母变成大写 {
         }
     }
 
-
-   public static void matchCase(char[] arr){
-
-   }
-
    //去空格，整体思路就是遇到两个连续的空格，就去后方找一个不是空格的，放到第二个空格的位置
     private static void trim(char[] arr){
-        int curr = 0;
-        for (int i = 1; i < arr.length; i++) {
-            curr = i-1;
-            //遇到两个连续的空格
-            if (arr[curr]==' ' && arr[i]==' '){
-                while (arr[curr]==' ' && arr[i]==' ' && i<arr.length-1){
-                    move(arr,i);
+        for (int i = 0; i < arr.length-1; i++) {
+            if (arr[i] == ' ') {
+                if (arr[i+1] == ' ') {
+                    while (arr[i+1] == ' ') {
+                        for (int j = i+1; j < arr.length-1; j++) {
+                            arr[j] = arr[j+1];
+                        }
+                    }
+                }
+            } 
+        }
+    }
+
+    //从offset位置开始是否有两个连续的空格
+    private static boolean isTwoSpace(char[] arr, int offset) {
+        if (arr.length < offset) return false;
+        char spaceCodeValue = ' ';
+        for ( ;offset < arr.length-1; offset++) {
+            if (arr[offset] == spaceCodeValue) {
+                if (arr[offset+1] == spaceCodeValue) {
+                    return true;
                 }
             }
         }
+        return false;
     }
-    //首字母大写
-    public static void mach(char[] arr){
-
-    }
-
-    //将数组全部向后挪一位
-    private static void move(char arr[],int index){
-        for (int i = index; i < arr.length-1; i++) {
-            arr[i] = arr[i+1];
+    
+    //从index向前挪动一位
+    /*private static void move(char[] arr, int index) {
+        if (arr.length < index) return;
+        int offset = index;
+        for ( ; offset < arr.length-1; offset++) {
+            arr[offset] = arr[offset+1];
         }
-    }
-
+    }*/
+   
 }
