@@ -13,7 +13,7 @@ public class 反转链表 {
         Node n4 = new Node(0);
         n1.next=n2;
         n1.next.next=n4;
-        Node.print(filpNodeList(n1));
+        Node.print(flipNodeList(n1));
         Node.print(filpNodeList1(n1));
     }
 
@@ -38,6 +38,18 @@ public class 反转链表 {
     public static Node filpNodeList1(Node node){
         Node pre=null,curr = node,next=null;
         while (curr!=null){
+            next = curr.next;
+            curr.next = pre;
+            pre = curr;
+            curr = next;
+        }
+        return pre;
+    }
+    
+    //链表反转三刷
+    public static Node flipNodeList(Node node) {
+        Node pre = null, curr = node, next = null;
+        while (curr != null) {
             next = curr.next;
             curr.next = pre;
             pre = curr;
