@@ -48,4 +48,10 @@ public class 两两交换链表中的节点 {
         }
         return pre.next;
     }
+    
+    public static void swapPairs1(Node node) {
+        Node nodePre = node, next = node.next;
+        
+    }
+    
 }
