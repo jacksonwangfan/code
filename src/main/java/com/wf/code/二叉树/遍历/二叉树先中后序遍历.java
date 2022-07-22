@@ -1,5 +1,6 @@
-package com.wf.code.二叉树;
+package com.wf.code.二叉树.遍历;
 
+import com.wf.code.二叉树.TreeNode;
 import sun.reflect.generics.tree.Tree;
 
 import java.util.*;
