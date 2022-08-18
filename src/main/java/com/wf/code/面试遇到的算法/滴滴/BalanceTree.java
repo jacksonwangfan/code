@@ -1,11 +1,11 @@
-package com.wf.code.面试遇到的算法;
+package com.wf.code.面试遇到的算法.滴滴;
 
 import com.wf.code.二叉树.TreeNode;
 
 /**
- * 滴滴二面
+ * 滴滴二面，判断一棵树书否是平衡二叉树
  */
-public class BlanceTree {
+public class BalanceTree {
 
     public static void main(String[] args) {
         
