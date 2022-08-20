@@ -47,6 +47,9 @@ public class 括号生成 {
             res.add(brackets);
             return;
         }
+        if(right < left){
+            return;
+        }
         if (left > 0){
             buildBrackets(brackets + "(" , left-1, right);
         }
