@@ -35,17 +35,19 @@ public class 组合总和 {
     }
 
     private static void backtracking(int []arr, int target, int currSum, int startIndex) {
-        // base case
+
+        //剪枝
         if (currSum > target) {
             return;
         }
 
+        // base case
         if (currSum == target) {
             result.add(new ArrayList<>(temp));
             return;
         }
 
-        //将不符合条件的剪枝掉
+        //将不符合条件的剪枝掉 (currSum + arr[i]) <= target 横向遍历即将不符合题目要求
         for (int i = startIndex; (i < arr.length && (currSum + arr[i]) <= target); i++) {
             temp.addLast(arr[i]);
             currSum += arr[i];
