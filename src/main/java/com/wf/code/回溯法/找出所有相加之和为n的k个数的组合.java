@@ -45,7 +45,8 @@ public class 找出所有相加之和为n的k个数的组合 {
 
 
     public static void main(String[] args) {
-        backtracking(0,7,3, 1);
+        backtracking1(0,3,9, 1);
+        //backtracking1(0,3,7, 1);
         for (List<Integer> re : res) {
             for (Integer integer : re) {
                 System.out.print(integer + "\t");
@@ -54,5 +55,31 @@ public class 找出所有相加之和为n的k个数的组合 {
         }
     }
 
+    /**
+     * 说明：
+     *
+     * 所有数字都是正整数。
+     * 解集不能包含重复的组合。
+     * 示例 1: 输入: k = 3, n = 7 输出: [[1,2,4]]
+     *
+     * 示例 2: 输入: k = 3, n = 9 输出: [[1,2,6], [1,3,5], [2,3,4]]
+     */
+
+    private static void backtracking1(int sum, int k, int targetSum, int startIndex) {
+        if (sum > targetSum){
+            return;
+        }
+        if (sum == targetSum && path.size() == k) {
+            res.add(new ArrayList<>(path));
+            return;
+        }
+        for (int i = startIndex; i < targetSum; i++) {
+            path.add(i);
+            sum += i;
+            backtracking1(sum, k, targetSum, i+1);
+            path.removeLast();
+            sum -= i;
+        }
+    }
 
 }
