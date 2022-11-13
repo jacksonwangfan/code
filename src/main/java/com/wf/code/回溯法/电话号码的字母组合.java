@@ -33,7 +33,7 @@ public class 电话号码的字母组合 {
     private static List<String> result = new ArrayList<>();
 
     public static void main(String[] args) {
-        backtracking(0, "234");
+        backtracking(0, "23");
         for (String value : result) {
             System.out.print(value + "\t");
         }
