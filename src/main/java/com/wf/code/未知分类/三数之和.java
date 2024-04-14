@@ -59,4 +59,41 @@ public class 三数之和 {
         return list;
     }
 
+    /** 三数之和**/
+    /*给你一个整数数组 nums ，判断是否存在三元组 [nums[i], nums[j], nums[k]] 满足 i != j、i != k 且 j != k ，同时还满足 nums[i] + nums[j] + nums[k] == 0 。请
+    你返回所有和为 0 且不重复的三元组。*/
+    private List<List<Integer>> getThreeNumbersSum(int[] array){
+        ArrayList<List<Integer>> lists = new ArrayList<>();
+        if (null == array || array.length == 0) {
+            return lists;
+        }
+
+        Arrays.sort(array);
+        for (int i = 0; i < array.length; i++) {
+            if (i >= 1 && array[i-1] == array[i]){
+                continue;
+            }
+
+            int L = i+1, R = array.length - 1;
+            while (L < R) {
+                int res = array[i] + array[L] + array[R];
+                if (res == 0) {
+                    //收集答案
+                    List<Integer> integers = Arrays.asList(array[i], array[L], array[R]);
+                    lists.add(integers);
+                    while (L < R && array[L] == array[L+1]) L++;
+                    while (L < R && array[R] == array[R-1]) R--;
+                    R--;
+                    L++;
+                }
+
+                if (res > 0) R--;
+                if (res < 0) L++;
+            }
+        }
+
+        return lists;
+    }
+
+
 }
