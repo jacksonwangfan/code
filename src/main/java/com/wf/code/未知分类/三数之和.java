@@ -96,4 +96,53 @@ public class 三数之和 {
     }
 
 
+    /**
+     * 最接近的三数之和
+     * @param nums
+     * @param target
+     * @return
+     */
+    private int threeSumClosest(int[] nums, int target){
+        if (null == nums || nums.length == 0) {
+            return 0;
+        }
+
+        Arrays.sort(nums);
+        int mockValue = Integer.MAX_VALUE;
+        for (int i = 0; i < nums.length; i++) {
+            if (i >= 1 && nums[i-1] == nums[i]) {
+                i++;
+                continue;
+            }
+
+            int L = i+1, R = nums.length - 1;
+            while (L < R) {
+                 int sum = nums[i] + nums[L] + nums[R];
+                 if (Math.abs(target - sum) < Math.abs(target - mockValue)) {
+                     mockValue = sum;
+                 }
+
+                while (L < R && nums[R] == nums[R-1]) R--;
+                while (L < R && nums[L] == nums[L+1]) L++;
+
+                 if (sum > target) {
+                     while (L < R && nums[R] == nums[R-1]) R--;
+                     R--;
+                 }
+
+                 if (sum < target) {
+                     while (L < R && nums[L] == nums[L+1]) L++;
+                    L++;
+                 }
+
+                 if (sum == target) {
+                     return mockValue;
+                 }
+            }
+        }
+
+        return mockValue;
+    }
+
+
 }
