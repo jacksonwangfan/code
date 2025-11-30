@@ -3,6 +3,7 @@ package com.wf.lingcha;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.IntStream;
 
 //双指针类问题
@@ -226,6 +227,164 @@ public class DoublePoint {
 
         return res;
     }
+
+    /**
+     * 最大连续1的个数 III
+     * 给定一个二进制数组 nums 和一个整数 k，假设最多可以翻转 k 个 0 ，则返回执行操作后 数组中连续 1 的最大个数 。
+     */
+    public int longestOnes(int[] nums, int k) {
+        int res = 0;
+        int left = 0;
+        int cnt0 = 0;
+        for (int r = 0; r < nums.length; r++) {
+            if (nums[r] == 0) {
+                cnt0++;//要翻转几个0
+            }
+
+            while (cnt0 > k) {
+                if (nums[left] == 0) {
+                    cnt0--;
+                }
+
+                left++;
+            }
+
+            res = Math.max(res, r -  left + 1);
+        }
+        return res;
+    }
+
+    /**
+     * 2962. 统计最大元素出现至少 K 次的子数组
+     * 给你一个整数数组 nums 和一个 正整数 k 。
+     * 请你统计有多少满足 「 nums 中的 最大 元素」至少出现 k 次的子数组，并返回满足这一条件的子数组的数目。
+     * 子数组是数组中的一个连续元素序列。
+     */
+    public long countSubarrays(int[] nums, int k) {
+        if (nums == null || k == 0) {
+            return 0L;
+        }
+
+        int maxVal = 0;
+        for (int i = 0; i < nums.length; i++) {
+            maxVal = Math.max(maxVal, nums[i]);
+        }
+
+        int maxCnt = 0;
+        long res = 0;
+        int left = 0;
+        for (int i = 0; i < nums.length; i++) {
+                if (maxVal == nums[i]){
+                    maxCnt++;
+                }
+
+                while (maxCnt == k) {
+                    if (nums[left] == maxVal) {
+                        maxCnt--;
+                    }
+                    left++;
+                }
+                //这里是关键
+                res = res + left;
+        }
+
+        return res;
+    }
+
+    /**
+     * 2302. 统计得分小于 K 的子数组数目
+     * 一个数组的 分数 定义为数组之和 乘以 数组的长度。
+     *
+     * 比方说，[1, 2, 3, 4, 5] 的分数为 (1 + 2 + 3 + 4 + 5) * 5 = 75 。
+     * 给你一个正整数数组 nums 和一个整数 k ，请你返回 nums 中分数 严格小于 k 的 非空整数子数组数目。
+     * 子数组 是数组中的一个连续元素序列。
+     */
+    public long countSubarrays(int[] nums, long k) {
+        if (nums == null || k == 0) {
+            return 0L;
+        }
+
+        long sum = 0;
+        int left = 0;
+        long res = 0;
+        for (int i = 0; i < nums.length; i++) {
+            sum = sum + nums[i];
+            while ((sum * (i - left + 1)) >= k){
+                sum = sum - nums[left];
+                left++;
+            }
+
+            //因为[i 至 left] 数组的分数是 严格小于k的，所以里面的所有子数组 ，也是严格小于K的，也就是有 i - left + 1 个
+            res = res + (i - left + 1);
+        }
+
+        return res;
+    }
+
+    /**
+     * 1658. 将 x 减到 0 的最小操作数
+     * 给你一个整数数组 nums 和一个整数 x 。每一次操作时，你应当移除数组 nums 最左边或最右边的元素，然后从 x 中减去该元素的值。请注意，需要 修改 数组以供接下来的操作使用。
+     * 如果可以将 x 恰好 减到 0 ，返回 最小操作数 ；否则，返回 -1 。
+     */
+    public int minOperations(int[] nums, int x) {
+
+            return 0;
+    }
+
+    /**
+     * 76. 最小覆盖子串
+     * 给你一个字符串 s 、一个字符串 t 。返回 s 中涵盖 t 所有字符的最小子串。如果 s 中不存在涵盖 t 所有字符的子串，则返回空字符串
+     */
+    public String minWindow(String s, String t) {
+        if ("".equals(s) || "".equals(t)) {
+            return "";
+        }
+
+        int ansLeft = -1, ansRight = s.length();
+        int left = 0;
+        //初始化目标数组
+        Map<Character, Integer> target = new HashMap<>();
+        for (int i = 0; i < t.length(); i++) {
+            Integer cnt = target.get(t.charAt(i)) == null ? 0 : target.get(t.charAt(i));
+            cnt++;
+            target.put(t.charAt(i), cnt);
+        }
+
+        Map<Character, Integer> window = new HashMap<>();
+        for (int r = 0; r < s.length(); r++) {
+            char c = s.charAt(r);
+            int count = window.get(c) == null ? 0 : window.get(c);
+            window.put(c, ++count);
+
+            //如果涵盖，移动左指针，让其不涵盖
+            while(isCovered(target, window)){
+                //收集答案，如果更短 收集答案
+                if (r - left < ansRight - ansLeft) {
+                    ansLeft = left;
+                    ansRight = r;
+                }
+
+                Integer cnt = window.get(s.charAt(left));
+                cnt--;
+                window.put(s.charAt(left), cnt);
+                left++;
+            }
+        }
+
+        return ansLeft < 0 ? "" : s.substring(left, ansRight + 1);
+    }
+
+    public boolean isCovered(Map<Character, Integer> target, Map<Character, Integer> window) {
+        Set<Character> characters = window.keySet();
+        for (Character c : characters) {
+            if (! window.get(c).equals(target.get(c))) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 
 
 }
