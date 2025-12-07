@@ -7,8 +7,13 @@ package com.wf.test;
  */
 public class Demo {
     public static void main(String[] args) {
-        int[] arr = {1,3,4,56,78,99,101,102};
-        System.out.println(findMax(arr));
+        //int[] arr = {1,3,4,56,78,99,101,102};
+        //System.out.println(findMax(arr));
+
+        //自动装箱和拆箱进行的操作
+       /* Integer i = null;
+        int r = i + 1;
+        System.out.println(r);*/
     }
 
    static int findMax(int [] array){
