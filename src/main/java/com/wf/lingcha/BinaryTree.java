@@ -168,5 +168,43 @@ public class BinaryTree {
     }
 
 
+    /**
+     * 二叉树的右视图，采用层序遍历的方式
+     * @param root
+     * @return
+     */
+    public List<Integer> rightSideViewLevelList(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+
+        List<Integer> res = new ArrayList<>();
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                if (node == null) {
+                    continue;
+                }
+
+                //最后一个收集答案
+                if (i == size - 1) {
+                    res.add(node.val);
+                }
+
+                if (node.left != null) {
+                    queue.add(node.left);
+                }
+
+                if (node.right != null) {
+                    queue.add(node.right);
+                }
+            }
+        }
+
+        return res;
+    }
 
 }
