@@ -207,4 +207,81 @@ public class BinaryTree {
         return res;
     }
 
+    /**
+     * 965. 单值二叉树
+     * 简单
+     * 相关标签
+     * premium lock icon
+     * 相关企业
+     * 如果二叉树每个节点都具有相同的值，那么该二叉树就是单值二叉树。
+     *
+     * 只有给定的树是单值二叉树时，才返回 true；否则返回 false
+     */
+    public boolean isUnivalTree(TreeNode root) {
+        if (root == null) {
+            return false;
+        }
+
+        int val = root.val;
+        return isSameValTree(root, val);
+
+    }
+
+    public boolean isSameValTree(TreeNode node, int val){
+        if (node == null) {
+            return true;
+        }
+
+        if (node.val != val) {
+            return false;
+        }
+
+       return isSameValTree(node.left, val) && isSameValTree(node.right, val);
+    }
+
+    /**
+     * 是否是 翻转等价二叉树
+     */
+    public boolean flipEquiv(TreeNode root1, TreeNode root2) {
+        if (root1 == root2) {
+            return true;
+        }
+
+        if (root1 == null || root2 == null || root1.val != root2.val) {
+            return false;
+        }
+
+       return  (flipEquiv(root1.left, root2.left) && flipEquiv(root1.right, root2.right)) || (flipEquiv(root1.right, root2.left) && flipEquiv(root1.left, root2.right));
+    }
+
+    /**
+     * 翻转二叉树
+     */
+    public TreeNode invertTree(TreeNode root) {
+        processInvertTree(root);
+        return root;
+    }
+
+    public void processInvertTree(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+
+        TreeNode temp = root.left;
+        root.left = root.right;
+        root.right = temp;
+
+        invertTree(root.left);
+        invertTree(root.right);
+    }
+
+    /**
+     * 合并二叉树 https://leetcode.cn/problems/merge-two-binary-trees/
+     */
+    public TreeNode mergeTrees(TreeNode root1, TreeNode root2) {
+        return null;
+    }
+
+
+
 }
