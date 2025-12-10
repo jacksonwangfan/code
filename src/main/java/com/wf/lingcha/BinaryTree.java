@@ -42,6 +42,25 @@ public class BinaryTree {
         System.out.println("二叉树的最大深度为: " + depth); // 输出：3
     }
 
+    /**
+     * 左叶子之和
+     * @param root
+     * @return
+     */
+    public int sumOfLeftLeaves(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+
+        int leftValue = 0;
+        //说明遍历到左叶子节点了
+        if (root.left != null && root.left.left == null && root.left.right == null) {
+            leftValue += root.left.val;
+        }
+
+       return leftValue +sumOfLeftLeaves(root.left) + sumOfLeftLeaves(root.right);
+    }
+
 
     //求二叉树的最大深度问题开始
     public static int DeepTree(TreeNode root) {
