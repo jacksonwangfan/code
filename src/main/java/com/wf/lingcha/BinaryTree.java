@@ -5,6 +5,7 @@ import com.wf.code.二叉树.TreeNode;
 import java.util.*;
 
 /**
+ * 二叉树题库2
  * 二叉树题库：https://github.com/EndlessCheng/codeforces-go/blob/master/leetcode/README.md
  * 涉及到的力扣题目+代码：
  * 104. 二叉树的最大深度 https://leetcode.cn/problems/maximum-depth-of-binary-tree/solution/kan-wan-zhe-ge-shi-pin-rang-ni-dui-di-gu-44uz/
@@ -28,6 +29,63 @@ import java.util.*;
 
 //二叉树相关问题
 public class BinaryTree {
+
+
+    /**
+     * 二叉树题库1：https://github.com/EndlessCheng/codeforces-go/blob/master/leetcode/README.md
+     */
+    //1. 二叉树的最大深度
+    public int maxDepth4(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+
+        int leftDepth = 1 + maxDepth4(root.left);
+        int rightDepth = 1 + maxDepth4(root.right);
+        return Math.max(leftDepth, rightDepth);
+    }
+
+    //2. 二叉树的最小深度 自底向上归
+    public int minDepth(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+
+        if (root.left == null) {
+            return  1 + minDepth(root.right);
+        }
+
+        if (root.right == null) {
+            return  1 + minDepth(root.left);
+        }
+
+        return Math.min(minDepth(root.left), minDepth(root.right)) + 1;
+    }
+
+    //自顶向下递
+    public int minDepth1(TreeNode root) {
+        Value ans = new Value();
+        ans.v = Integer.MAX_VALUE;
+        minDepthDFS(root, 0, ans);
+        return root == null ? 0 : ans.v;
+    }
+
+    public void minDepthDFS(TreeNode root, int cnt, Value ans) {
+        if (root == null) {
+            return;
+        }
+
+        cnt++;
+        //叶子节点手机答案
+        if (root.left == null && root.right == null) {
+            ans.v = Math.min(ans.v, cnt);
+        }
+
+        minDepthDFS(root.left, cnt, ans);
+        minDepthDFS(root.right, cnt, ans);
+    }
+
+
 
     public static void main(String[] args) {
         TreeNode root = new TreeNode(3);
