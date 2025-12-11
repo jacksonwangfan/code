@@ -85,6 +85,43 @@ public class BinaryTree {
         minDepthDFS(root.right, cnt, ans);
     }
 
+    //二叉树左叶子之和
+    public int sumOfLeftLeaves1(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+
+        int sum = 0;
+        //找到左叶子节点
+        if (root.left != null && root.left.left == null && root.left.right == null) {
+            sum += root.left.val;
+        }
+
+        return sum + sumOfLeftLeaves1(root.left) + sumOfLeftLeaves1(root.right);
+    }
+
+    /**
+     * 给你二叉树的根节点 root 和一个表示目标和的整数 targetSum 。判断该树中是否存在 根节点到叶子节点 的路径，这条路径上所有节点值相加等于目标和 targetSum 。如果存在，返回 true ；否则，返回 false 。
+     * 叶子节点 是指没有子节点的节点。
+     */
+    public boolean hasPathSum(TreeNode root, int targetSum) {
+        return pathSum(root, targetSum, 0);
+    }
+
+    public boolean pathSum(TreeNode root, int targetSum, int sum) {
+        if (root == null) {
+            return false;
+        }
+
+        sum += root.val;
+        //叶子节点返回
+        if (root.left == null && root.right == null) {
+            //因为到了叶子节点一定会返回
+           return sum == targetSum;
+        }
+
+        return  pathSum(root.left, targetSum, sum) || pathSum(root.right, targetSum, sum);
+    }
 
 
     public static void main(String[] args) {
