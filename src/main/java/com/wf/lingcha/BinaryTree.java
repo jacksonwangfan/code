@@ -152,6 +152,69 @@ public class BinaryTree {
 
     }
 
+    /**
+     * 给你一棵根为 root 的二叉树，请你返回二叉树中好节点的数目。
+     *
+     * 「好节点」X 定义为：从根到该节点 X 所经过的节点中，没有任何节点的值大于 X 的值。
+     *
+     * 统计二叉树中好节点的数目
+     * https://leetcode.cn/problems/count-good-nodes-in-binary-tree/description/
+     */
+    public int goodNodes(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+
+        return  goodNodes(root, root.val);
+
+    }
+
+    public int goodNodes(TreeNode root, int maxVal){
+        if (root == null) {
+            return 0;
+        }
+
+        int total = 0;
+        //说明是好节点
+        if (root.val >= maxVal) {
+            total++;
+            maxVal = root.val;
+        }
+
+        total = total + goodNodes(root.left, maxVal) + goodNodes(root.right, maxVal);
+        return total;
+    }
+
+
+    /**
+     * 二叉树的垂序遍历
+     * https://leetcode.cn/problems/vertical-order-traversal-of-a-binary-tree/description/
+     */
+    public List<List<Integer>> verticalTraversal(TreeNode root) {
+
+        return null;
+    }
+
+
+/*    //平衡二叉树
+    public boolean isBalanceTree(TreeNode root){
+        if (root == null) {
+            return true;
+        }
+
+        return (treeHight(root.right) - treeHight(root.left) <= 1) && isBalanced(root.left) && isBalanced(root.right);
+    }
+
+    //树的高度
+    public int treeHight(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+
+        int leftHight = treeHight(root.left);
+        int rightHight = treeHight(root.right);
+        return  Math.max(leftHight, rightHight) +1;
+    }*/
 
 
 
