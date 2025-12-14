@@ -22,6 +22,50 @@ import java.util.*;
 //二叉树相关问题
 public class BinaryTree {
 
+    /**
+     * 108. 将有序数组转换为二叉搜索树
+     * 给你一个整数数组 nums ，其中元素已经按 升序 排列，请你将其转换为一棵 平衡 二叉搜索树。
+     */
+    public TreeNode sortedArrayToBST(int[] nums) {
+        return buildTree(nums, 0, nums.length - 1);
+    }
+
+    public TreeNode buildTree(int[] nums, int left , int right) {
+        if (left > right) {
+            return null;
+        }
+
+        int mid = (left + right + 1) / 2;
+        TreeNode node = new TreeNode(nums[mid]);
+        node.left = buildTree(nums, left, mid - 1);
+        node.right = buildTree(nums, mid + 1, right);
+
+        return node;
+    }
+
+
+    /**
+     * 剪枝二叉树
+     * LCR 047. 二叉树剪枝
+     * https://leetcode.cn/problems/pOCWxh/description/
+     * 给定一个二叉树 根节点 root ，树的每个节点的值要么是 0，要么是 1。请剪除该二叉树中所有节点的值为 0 的子树。
+     * 节点 node 的子树为 node 本身，以及所有 node 的后代。
+     */
+    public TreeNode pruneTree(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+
+        root.left  = pruneTree(root.left);
+        root.right = pruneTree(root.right);
+
+        if (root.left == null && root.right == null && root.val == 0) {
+            return null;
+        }
+
+        return root;
+    }
+
 
     /**
      * 二叉树题库1：https://github.com/EndlessCheng/codeforces-go/blob/master/leetcode/README.md
