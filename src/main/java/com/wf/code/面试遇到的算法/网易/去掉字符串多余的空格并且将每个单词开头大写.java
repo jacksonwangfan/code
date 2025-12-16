@@ -1,5 +1,7 @@
 package com.wf.code.面试遇到的算法.网易;
 
+import java.util.Arrays;
+
 /**
  * 网易技术终面，去掉字符串多余的空格并且将每个单词开头大写
  * 例如
@@ -9,8 +11,43 @@ package com.wf.code.面试遇到的算法.网易;
 public class 去掉字符串多余的空格并且将每个单词开头大写 {
 
     public static void main(String[] args) {
-        System.out.println(processString(" my  Name   is   wang fan!    hello    word    !"));
+        System.out.println(processStringWriteReadPoint(" my  Name   is   wang fan!    hello    word    !"));
     }
+
+    public static String processStringWriteReadPoint(String s){
+        if ("".equals(s)) {
+            return "";
+        }
+        char[] chars = s.toCharArray();
+        int write = 0;
+        boolean isWordsStart = false;
+        for (int i = 0; i < chars.length; i++) {
+            char c = chars[i];
+            if (c == ' ') {
+                //遇到单个空格时保留一个空格
+                if (write > 0 && chars[write - 1] != ' ') {
+                    chars[write] = ' ';
+                    write++;
+                }
+
+                isWordsStart = true;
+            }else {
+                if (isWordsStart) {
+                    chars[write] = Character.toUpperCase(c);
+                }else  {
+                    chars[write] = Character.toLowerCase(c);
+                }
+                isWordsStart = false;
+                write++;
+            }
+        }
+
+        //write会停留在句子末尾的位置
+        if (write > 0 && chars[write] == ' ') write--;
+
+        return new String(chars, 0, write);
+    }
+
 
     private static String processString(String s){
         if (null == s){
