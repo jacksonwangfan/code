@@ -560,7 +560,29 @@ public class BinaryTree {
         return root1;
     }
 
+    /**
+     * 判断二叉树是不是 二叉搜索树
+     */
+    public boolean isValidBST(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
 
+        long left = Long.MIN_VALUE;
+        long right = Long.MAX_VALUE;
+        return isValidBSTSub(root, left, right);
+    }
+
+
+    public boolean isValidBSTSub(TreeNode root, long left, long right) {
+        if (root == null) {
+            return true;
+        }
+
+        return root.val > left && root.val < right
+                && isValidBSTSub(root.left, left, root.val)
+                && isValidBSTSub(root.right, root.val, right);
+    }
 
 
 
