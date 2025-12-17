@@ -585,6 +585,26 @@ public class BinaryTree {
     }
 
 
+    /**
+     * 二叉树染色
+     * https://leetcode.cn/problems/QO5KpG/
+     */
+    public int getNumber(TreeNode root, int[][] ops) {
+        if (root == null) {
+            return 0;
+        }
+
+        //todo
+        return 0;
+
+    }
+
+    //判断当前节点是不是红的
+    public boolean isRed(TreeNode root, int[][] ops) {
+        return false;
+    }
+
+
 
 
 
