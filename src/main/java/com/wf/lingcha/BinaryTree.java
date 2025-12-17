@@ -22,6 +22,118 @@ import java.util.*;
 //二叉树相关问题
 public class BinaryTree {
 
+    //二叉树的层序遍历
+    public List<List<Integer>> levelOrderByQueue(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (root == null) {
+            return res;
+        }
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            int queueSize = queue.size();
+            List<Integer> list = new ArrayList<>();
+            for (int i = 0; i < queueSize; i++) {
+                TreeNode node = queue.poll();
+                list.add(node.val);
+                if (node.left != null) {
+                    queue.add(node.left);
+                }
+                if (node.right != null) {
+                    queue.add(node.right);
+                }
+            }
+
+            res.add(list);
+        }
+
+        return res;
+    }
+
+    //二叉树的层序遍历
+    public List<List<Integer>> levelOrderByArr(TreeNode root) {
+        if (root == null) {
+            return new ArrayList<>();
+        }
+        List<List<Integer>> res = new ArrayList<>();
+        List<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while(!queue.isEmpty()) {
+            List<TreeNode> next = new LinkedList<>();
+            List<Integer> r = new ArrayList<>();
+            for (TreeNode treeNode : queue) {
+                r.add(treeNode.val);
+
+                if (treeNode.left != null) {
+                    next.add(treeNode.left);
+                }
+
+                if (treeNode.right != null) {
+                    next.add(treeNode.right);
+                }
+            }
+
+            queue = next;
+            res.add(r);
+        }
+
+        return res;
+    }
+
+    //二叉搜索树树的最近公共祖先
+    public TreeNode lowestCommonAncestor1(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null) {
+            return null;
+        }
+        if (p.val < root.val && q.val > root.val){
+            return root;
+        }
+
+        if (q.val < root.val && p.val > root.val){
+            return root;
+        }
+
+        if (root.val == p.val) return p;
+        if (root.val == q.val) return q;
+
+        TreeNode left = lowestCommonAncestor1(root.left, p, q);
+        if (left != null) {
+            return left;
+        }
+
+        TreeNode right = lowestCommonAncestor1(root.right, p, q);
+
+        return right;
+
+
+    }
+
+    //二叉树的最近公共祖先
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null){
+            return null;
+        }
+
+        if (root.val == p.val || root.val == q.val) {
+            return root;
+        }
+
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+        if (left != null && right != null) {
+            return root;
+        }
+
+        if (left != null) {
+            return left;
+        }
+
+        return right;
+
+    }
+
+
     /**
      * 108. 将有序数组转换为二叉搜索树
      * 给你一个整数数组 nums ，其中元素已经按 升序 排列，请你将其转换为一棵 平衡 二叉搜索树。
