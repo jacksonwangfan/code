@@ -584,6 +584,7 @@ public class BinaryTree {
                 && isValidBSTSub(root.right, root.val, right);
     }
 
+    private int res = 0;
 
     /**
      * 二叉树染色
@@ -593,15 +594,34 @@ public class BinaryTree {
         if (root == null) {
             return 0;
         }
+        isRed(root, ops);
+        getNumber(root.left, ops);
+        getNumber(root.right, ops);
 
-        //todo
-        return 0;
-
+        return res;
     }
 
     //判断当前节点是不是红的
-    public boolean isRed(TreeNode root, int[][] ops) {
-        return false;
+    public void isRed(TreeNode root, int[][] ops) {
+        if (root == null) {
+            return;
+        }
+        int val = root.val;
+
+        for (int i = ops.length - 1; i > 0; i--) {
+            int color = ops[i][0];
+            int left = ops[i][1];
+            int right = ops[i][2];
+
+            //0是蓝色 1是红色
+            if (left <= val && right >= val) {
+                if (color == 1) {
+                    res++;
+                }
+
+                return;
+            }
+        }
     }
 
 
