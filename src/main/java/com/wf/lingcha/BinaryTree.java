@@ -22,6 +22,172 @@ import java.util.*;
 //二叉树相关问题
 public class BinaryTree {
 
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        preorderTraversal(root, res);
+        return res;
+    }
+
+    public void preorderTraversal(TreeNode root, List<Integer> res) {
+         if (root == null) return;
+         res.add(root.val);
+         preorderTraversal(root.left, res);
+         preorderTraversal(root.right, res);
+    }
+
+
+    //完全二叉树的节点个数
+    public int countNodes(TreeNode root) {
+            if (root == null){
+                return 0;
+            }
+
+            return 1 + countNodes(root.left) + countNodes(root.right) ;
+    }
+
+    /**
+     * 二叉树的所有路径
+     * 给你一个二叉树的根节点 root ，按 任意顺序 ，返回所有从根节点到叶子节点的路径。
+     * 叶子节点 是指没有子节点的节点。
+     */
+    public List<String> binaryTreePaths(TreeNode root) {
+        List<String> res = new ArrayList<>();
+        binaryTreePaths(root, "", res);
+        return res;
+    }
+
+    public void binaryTreePaths(TreeNode root, String s, List<String> res) {
+        if (root == null) {
+            return;
+        }
+
+        s += String.valueOf(root.val);
+        if (root.left == null && root.right == null) {
+            res.add(s);
+        }
+
+        s += "->";
+        binaryTreePaths(root.left, s, res);
+        binaryTreePaths(root.right, s, res);
+    }
+
+    int sumOfLeftLeaves3;
+    //二叉树左叶子只和
+    public int sumOfLeftLeaves3(TreeNode root) {
+        if (root == null) {return 0;}
+
+        //收集答案
+        if (root.left != null && root.left.left == null && root.left.right == null) {
+            sumOfLeftLeaves3 += root.left.val;
+        }
+
+        sumOfLeftLeaves3(root.left);
+        sumOfLeftLeaves3(root.right);
+
+        return sumOfLeftLeaves3;
+    }
+
+
+    private int baseValue, currCount, maxCount;
+    private List<Integer> res = new ArrayList<>();
+    /**
+     * 二叉搜索树中的众数
+     * https://leetcode.cn/problems/find-mode-in-binary-search-tree/description/?envType=problem-list-v2&envId=binary-tree
+     */
+    public int[] findMode(TreeNode root) {
+        baseValue = root.val;
+        dfs(root);
+        int[] result = new int[res.size()];
+        for (int i = 0; i < res.size(); i++) {
+            result[i] = res.get(i);
+        }
+
+        return result;
+    }
+
+    public void dfs(TreeNode node){
+        if (node == null) {
+            return;
+        }
+
+        dfs(node.left);
+
+        int val = node.val;
+        if (val == baseValue) {
+            currCount ++;
+        }else {
+            currCount = 1;
+            baseValue = val;
+        }
+
+        if (currCount == maxCount) {
+            //同一个数 这里只能被执行一次，所以这不用考虑去重
+            res.add(val);
+        }
+
+        //说明找到 新的众数了
+        if (currCount > maxCount) {
+            res.clear();
+            maxCount = currCount;
+            res.add(val);
+        }
+
+        dfs(node.right);
+    }
+
+    int pre = Integer.MIN_VALUE;
+    int min = Integer.MAX_VALUE / 2;
+    /**
+     * 530. 二叉搜索树的最小绝对差
+     * https://leetcode.cn/problems/minimum-absolute-difference-in-bst/?envType=problem-list-v2&envId=binary-tree
+     * 二叉搜索树的最小绝对差
+     */
+    public int getMinimumDifference(TreeNode root) {
+        getMinimumDifferenceSub(root);
+        return min;
+    }
+
+    public void getMinimumDifferenceSub(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+
+        getMinimumDifferenceSub(root.left);
+        min = Math.min(root.val - pre, min);
+        pre = root.val;
+        getMinimumDifferenceSub(root.right);
+    }
+
+
+    int diameterOfBinaryTree = 0;
+    /*
+     * 二叉树的直径
+     * https://leetcode.cn/problems/diameter-of-binary-tree/description/?envType=problem-list-v2&envId=binary-tree
+     * 给你一棵二叉树的根节点，返回该树的 直径 。
+        二叉树的 直径 是指树中任意两个节点之间最长路径的 长度 。这条路径可能经过也可能不经过根节点 root 。
+        两节点之间路径的 长度 由它们之间边数表示。
+     */
+    public int diameterOfBinaryTree(TreeNode root) {
+        diameterOfBinaryTreeSub(root);
+        return diameterOfBinaryTree;
+    }
+
+    public int diameterOfBinaryTreeSub(TreeNode root) {
+        if (root == null) {
+            return -1;
+        }
+
+        //计算左节点的树高
+        int left = diameterOfBinaryTreeSub(root.left) + 1;
+        //计算右节点的树高
+        int right = diameterOfBinaryTreeSub(root.right) + 1;
+        //left + right 是这棵树的直径，比较直径的最大值，收集答案
+        diameterOfBinaryTree = Math.max(left + right, diameterOfBinaryTree);
+        //最后返回这颗子树的对最大深度
+        return Math.max(left, right);
+    }
+
+
     //二叉树的层序遍历
     public List<List<Integer>> levelOrderByQueue(TreeNode root) {
         List<List<Integer>> res = new ArrayList<>();
