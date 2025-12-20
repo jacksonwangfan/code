@@ -89,7 +89,7 @@ public class BinaryTree {
 
 
     private int baseValue, currCount, maxCount;
-    private List<Integer> res = new ArrayList<>();
+    private List<Integer> resList = new ArrayList<>();
     /**
      * 二叉搜索树中的众数
      * https://leetcode.cn/problems/find-mode-in-binary-search-tree/description/?envType=problem-list-v2&envId=binary-tree
@@ -97,9 +97,9 @@ public class BinaryTree {
     public int[] findMode(TreeNode root) {
         baseValue = root.val;
         dfs(root);
-        int[] result = new int[res.size()];
-        for (int i = 0; i < res.size(); i++) {
-            result[i] = res.get(i);
+        int[] result = new int[resList.size()];
+        for (int i = 0; i < resList.size(); i++) {
+            result[i] = resList.get(i);
         }
 
         return result;
@@ -122,14 +122,14 @@ public class BinaryTree {
 
         if (currCount == maxCount) {
             //同一个数 这里只能被执行一次，所以这不用考虑去重
-            res.add(val);
+            resList.add(val);
         }
 
         //说明找到 新的众数了
         if (currCount > maxCount) {
-            res.clear();
+            resList.clear();
             maxCount = currCount;
-            res.add(val);
+            resList.add(val);
         }
 
         dfs(node.right);
