@@ -22,6 +22,158 @@ import java.util.*;
 //二叉树相关问题
 public class BinaryTree {
 
+    /**
+     * 653. 两数之和 IV - 输入二叉搜索树'
+     * https://leetcode.cn/problems/two-sum-iv-input-is-a-bst/description/?envType=problem-list-v2&envId=binary-tree
+     * 给定一个二叉搜索树 root 和一个目标结果 k，如果二叉搜索树中存在两个元素且它们的和等于给定的目标结果，则返回 true。
+     */
+    private boolean findTargetRes = false;
+    private long backVal = Integer.MIN_VALUE;
+
+    public boolean findTarget(TreeNode root, int k) {
+        //TODO 待完成
+        return false;
+    }
+
+
+
+    /**
+     * 637. 二叉树的层平均值
+     * https://leetcode.cn/problems/average-of-levels-in-binary-tree/description/?envType=problem-list-v2&envId=binary-tree
+     * 给定一个非空二叉树的根节点 root , 以数组的形式返回每一层节点的平均值。与实际答案相差 10-5 以内的答案可以被接受。
+     */
+    public List<Double> averageOfLevels(TreeNode root) {
+        List<Double> res = new ArrayList<Double>();
+        if (root == null) {
+            return res;
+        }
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            long sum = 0;
+            double average = 0;
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                sum += node.val;
+                if (node.left != null) {
+                    queue.add(node.left);
+                }
+
+                if (node.right != null) {
+                    queue.add(node.right);
+                }
+            }
+
+            average = sum / (double) size;
+            res.add(average);
+        }
+
+        return res;
+
+    }
+
+    /**
+     * 另一棵树的子树
+     * https://leetcode.cn/problems/subtree-of-another-tree/?envType=problem-list-v2&envId=binary-tree
+     * 给你两棵二叉树 root 和 subRoot 。检验 root 中是否包含和 subRoot 具有相同结构和节点值的子树。如果存在，返回 true ；否则，返回 false 。
+     * 二叉树 tree 的一棵子树包括 tree 的某个节点和这个节点的所有后代节点。tree 也可以看做它自身的一棵子树。
+     */
+    public boolean isSubtree(TreeNode root, TreeNode subRoot) {
+        if (root == null) {
+            return false;
+        }
+
+        if (subRoot == null) {
+            return false;
+        }
+
+
+        if (root.val == subRoot.val && isSubTreeIsSameTree(root, subRoot)) {
+            return true;
+        }
+
+       return isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot);
+    }
+
+    public boolean isSubTreeIsSameTree(TreeNode subRoot1, TreeNode subRoot2) {
+        if (subRoot1 == null || subRoot2 == null) {
+            return subRoot1 == subRoot2;
+        }
+
+        return  (subRoot1.val == subRoot2.val) && isSubTreeIsSameTree(subRoot1.left, subRoot2.left) && isSubTreeIsSameTree(subRoot1.right, subRoot2.right);
+    }
+
+
+    /**
+     * 563. 二叉树的坡度
+     * https://leetcode.cn/problems/binary-tree-tilt/description/?envType=problem-list-v2&envId=binary-tree
+     *
+     * 给你一个二叉树的根节点 root ，计算并返回 整个树 的坡度 。
+     * 一个树的 节点的坡度 定义即为，该节点左子树的节点之和和右子树节点之和的 差的绝对值 。如果没有左子树的话，左子树的节点之和为 0 ；没有右子树的话也是一样。空结点的坡度是 0 。
+     * 整个树 的坡度就是其所有节点的坡度之和。
+     */
+
+    //这个虽然能access但是看上去还是向下递的方式，每往下递都要重新计算左右子树的和，时间复杂度是O(n)方。
+    public int findTilt(TreeNode root) {
+        if (root == null) {
+           return 0;
+        }
+
+        int sumLeft = sum(root.left);
+        int sumRight = sum(root.right);
+
+        int tile = Math.abs(sumLeft - sumRight);
+        return tile + findTilt(root.left) + findTilt(root.right);
+    }
+
+    public int sum(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+
+        return root.val + sum(root.left) +  sum(root.right);
+    }
+
+
+    /**
+     * LCR 045. 找树左下角的值
+     * https://leetcode.cn/problems/LwUNpT/description/
+     * 给定一个二叉树的 根节点 root，请找出该二叉树的 最底层 最左边 节点的值。
+     *
+     * 假设二叉树中至少有一个节点。
+     */
+    public int findBottomLeftValue(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        TreeNode lastLevelFirstNode = null;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            int levelSize = queue.size();
+            for (int i = 0; i < levelSize; i++) {
+                TreeNode treeNode = queue.poll();
+                if (treeNode.left != null) {
+                    queue.add(treeNode.left);
+                }
+
+                if (treeNode.right != null) {
+                    queue.add(treeNode.right);
+                }
+
+                if (i != 0) {
+                    continue;
+                }
+
+                lastLevelFirstNode = treeNode;
+            }
+        }
+
+        return lastLevelFirstNode == null ? 0 : lastLevelFirstNode.val;
+    }
+
     public List<Integer> preorderTraversal(TreeNode root) {
         List<Integer> res = new ArrayList<>();
         preorderTraversal(root, res);
