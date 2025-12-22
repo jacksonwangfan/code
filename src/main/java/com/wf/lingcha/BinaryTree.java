@@ -2,6 +2,7 @@ package com.wf.lingcha;
 
 import com.wf.code.二叉树.TreeNode;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -23,16 +24,184 @@ import java.util.*;
 public class BinaryTree {
 
     /**
+     * https://leetcode.cn/problems/leaf-similar-trees/description/?envType=problem-list-v2&envId=binary-tree
+     * 872. 叶子相似的树
+     * 请考虑一棵二叉树上所有的叶子，这些叶子的值按从左到右的顺序排列形成一个 叶值序列 。
+     *
+     * 举个例子，如上图所示，给定一棵叶值序列为 (6, 7, 4, 9, 8) 的树。
+     * 如果有两棵二叉树的叶值序列是相同，那么我们就认为它们是 叶相似 的。
+     * 如果给定的两个根结点分别为 root1 和 root2 的树是叶相似的，则返回 true；否则返回 false 。
+     */
+
+    private StringBuilder res1 = new StringBuilder();
+    private StringBuilder res2 = new StringBuilder();
+    public boolean leafSimilar(TreeNode root1, TreeNode root2) {
+        leafSimilarBFS(root1, res1);
+        leafSimilarBFS(root2, res2);
+        return res1.toString().equals(res2.toString());
+    }
+
+
+    public  void leafSimilarBFS(TreeNode root,  StringBuilder res) {
+        if (root == null) {
+            return;
+        }
+
+        if (root.left == null && root.right == null) {
+            res.append(root.val).append(',');
+        }
+
+        leafSimilarBFS(root.left, res);
+        leafSimilarBFS(root.right, res);
+    }
+
+
+    /**
+     * https://leetcode.cn/problems/minimum-distance-between-bst-nodes/description/?envType=problem-list-v2&envId=binary-tree
+     * 783. 二叉搜索树节点最小距离
+     * 给你一个二叉搜索树的根节点 root ，返回 树中任意两不同节点值之间的最小差值 。
+     * 差值是一个正数，其数值等于两值之差的绝对值。
+     */
+    private TreeNode pre = null;
+    private int res = Integer.MAX_VALUE;
+    public int minDiffInBST(TreeNode root) {
+        minDiffInBSTDFS(root);
+        return res;
+    }
+
+
+    public void minDiffInBSTDFS(TreeNode root) {
+        if (root == null) return;
+        minDiffInBSTDFS(root.left);
+        if (pre != null) {
+            res = Math.min(res, Math.abs(root.val - pre.val));
+        }
+        pre = root;
+
+        minDiffInBSTDFS(root.right);
+    }
+
+    /**
+     * 703. 数据流中的第 K 大元素
+     * https://leetcode.cn/problems/kth-largest-element-in-a-stream/description/?envType=problem-list-v2&envId=binary-tree
+     * 设计一个找到数据流中第 k 大元素的类（class）。注意是排序后的第 k 大元素，不是第 k 个不同的元素。
+     * 请实现 KthLargest 类：
+     * KthLargest(int k, int[] nums) 使用整数 k 和整数流 nums 初始化对象。
+     * int add(int val) 将 val 插入数据流 nums 后，返回当前数据流中第 k 大的元素。
+     */
+    /*PriorityQueue<Integer> queue = new PriorityQueue<Integer>();
+    Integer size = 0;
+    public KthLargest(int k, int[] nums) {
+        this.size = k;
+        for (int i = 0; i < nums.length; i++) {
+            add(nums[i]);
+        }
+    }
+
+    public int add(int val) {
+        queue.offer(val);
+        if (queue.size() > size) {
+            queue.poll();
+        }
+
+        return queue.peek();
+    }*/
+
+    //二叉搜索树中找一个节点
+    public TreeNode searchBST(TreeNode root, int val) {
+        if (root == null) {
+            return null;
+        }
+
+        if (val == root.val) {
+            return root;
+        }
+
+        return   searchBST(val >= root.val ? root.right : root.left, val);
+       /*TreeNode left = searchBST(root.left, val);
+        if (left != null) {
+            return left;
+        }
+       return searchBST(root.right, val);*/
+    }
+
+    /**
+     * 671. 二叉树中第二小的节点
+     * 给定一个非空特殊的二叉树，每个节点都是正数，并且每个节点的子节点数量只能为 2 或 0。如果一个节点有两个子节点的话，那么该节点的值等于两个子节点中较小的一个。
+     * 更正式地说，即 root.val = min(root.left.val, root.right.val) 总成立。
+     * 给出这样的一个二叉树，你需要输出所有节点中的 第二小的值 。
+     * 如果第二小的值不存在的话，输出 -1 。
+     */
+
+    private int ans = -1;
+    private int rootVal;
+    public int findSecondMinimumValue(TreeNode root) {
+        if (root == null) return ans;
+        rootVal = root.val;
+        findSecondMinimumValueDfs(root);
+        return ans;
+    }
+
+    private void findSecondMinimumValueDfs(TreeNode root){
+        if(root == null) {
+            return;
+        }
+
+
+        if (root.val > rootVal) {
+            ans = root.val;
+        }
+
+        findSecondMinimumValueDfs(root.left);
+        findSecondMinimumValueDfs(root.right);
+    }
+
+    /**
      * 653. 两数之和 IV - 输入二叉搜索树'
      * https://leetcode.cn/problems/two-sum-iv-input-is-a-bst/description/?envType=problem-list-v2&envId=binary-tree
      * 给定一个二叉搜索树 root 和一个目标结果 k，如果二叉搜索树中存在两个元素且它们的和等于给定的目标结果，则返回 true。
      */
-    private boolean findTargetRes = false;
-    private long backVal = Integer.MIN_VALUE;
+    Set<Integer> findTargetSet = new HashSet<>();
+    public boolean findTarget1(TreeNode root, int k) {
+        if (root == null) {
+            return false;
+        }
+
+        if (findTargetSet.contains(k - root.val)) return true;
+        findTargetSet.add(root.val);
+
+        return  findTarget1(root.left, k) || findTarget1(root.right, k);
+
+    }
 
     public boolean findTarget(TreeNode root, int k) {
-        //TODO 待完成
+        List<Integer> list = new ArrayList<>();
+        findTargetDfs(root, k, list);
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = i + 1; j < list.size();j++ ) {
+                if (list.get(i) + list.get(j) > k) {
+                    break;
+                }
+
+                if (list.get(i) + list.get(j) == k) {
+                    return true;
+                }
+            }
+        }
+
         return false;
+    }
+
+    public void findTargetDfs(TreeNode treeNode, int k, List<Integer> list) {
+        if (treeNode == null) {
+            return;
+        }
+
+        findTargetDfs(treeNode.left, k, list);
+        int val = treeNode.val;
+        list.add(val);
+        findTargetDfs(treeNode.right, k, list);
+
     }
 
 
@@ -136,7 +305,7 @@ public class BinaryTree {
         return root.val + sum(root.left) +  sum(root.right);
     }
 
-
+cx
     /**
      * LCR 045. 找树左下角的值
      * https://leetcode.cn/problems/LwUNpT/description/
