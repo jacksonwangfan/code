@@ -24,6 +24,64 @@ import java.util.*;
 public class BinaryTree {
 
     /**
+     * 938. 二叉搜索树的范围和
+     * 给定二叉搜索树的根结点 root，返回值位于范围 [low, high] 之间的所有结点的值的和。
+     */
+    private int rangeSumBSTRes = 0;
+    public int rangeSumBST(TreeNode root, int low, int high) {
+        rangeSumBSTSub(root, low, high);
+        return rangeSumBSTRes;
+    }
+
+    public void rangeSumBSTSub(TreeNode root, int low, int high) {
+        if (root == null) {
+            return;
+        }
+
+        if (root.val >= low && root.val <= high) {
+            rangeSumBSTRes += root.val;
+            rangeSumBSTSub(root.left, low, high);
+            rangeSumBSTSub(root.right, low, high);
+        }
+
+        if (root.val < low) {
+            rangeSumBSTSub(root.right, low, high);
+        }
+
+        if (root.val > high) {
+            rangeSumBSTSub(root.left, low, high);
+        }
+    }
+
+    /**
+     * 递增顺序搜索树
+     * 给你一棵二叉搜索树的 root
+     * 请你 按中序遍历 将其重新排列为一棵递增顺序搜索树，使树中最左边的节点成为树的根节点，并且每个节点没有左子节点，只有一个右子节点。
+     */
+
+    TreeNode temp;
+    public TreeNode increasingBST(TreeNode root) {
+        TreeNode firstNode = new TreeNode(-1);
+        temp = firstNode;
+        increasingBSTSub(root);
+        return firstNode.right;
+    }
+
+    public void increasingBSTSub(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+
+        increasingBSTSub(root.left);
+
+        temp.right = root;
+        root.left = null;
+        temp = root;
+
+        increasingBSTSub(root.right);
+    }
+
+    /**
      * https://leetcode.cn/problems/leaf-similar-trees/description/?envType=problem-list-v2&envId=binary-tree
      * 872. 叶子相似的树
      * 请考虑一棵二叉树上所有的叶子，这些叶子的值按从左到右的顺序排列形成一个 叶值序列 。
