@@ -363,7 +363,6 @@ public class BinaryTree {
         return root.val + sum(root.left) +  sum(root.right);
     }
 
-cx
     /**
      * LCR 045. 找树左下角的值
      * https://leetcode.cn/problems/LwUNpT/description/
@@ -514,7 +513,7 @@ cx
         dfs(node.right);
     }
 
-    int pre = Integer.MIN_VALUE;
+    int pre1 = Integer.MIN_VALUE;
     int min = Integer.MAX_VALUE / 2;
     /**
      * 530. 二叉搜索树的最小绝对差
@@ -532,8 +531,8 @@ cx
         }
 
         getMinimumDifferenceSub(root.left);
-        min = Math.min(root.val - pre, min);
-        pre = root.val;
+        min = Math.min(root.val - pre1, min);
+        pre1 = root.val;
         getMinimumDifferenceSub(root.right);
     }
 
@@ -1241,7 +1240,6 @@ cx
                 && isValidBSTSub(root.right, root.val, right);
     }
 
-    private int res = 0;
 
     /**
      * 二叉树染色
