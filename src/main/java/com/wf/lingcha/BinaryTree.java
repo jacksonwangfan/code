@@ -23,6 +23,125 @@ import java.util.*;
 //二叉树相关问题
 public class BinaryTree {
 
+
+
+
+    /**
+     * 构建一颗平衡二叉树
+     */
+    public TreeNode sortedArrayToBST1(int[] nums) {
+       return buildBSTByArray1(nums, 0, nums.length - 1);
+    }
+
+    public TreeNode buildBSTByArray1(int[] nums, int left, int right) {
+        if (left > right) {
+            return null;
+        }
+
+        int mid = (left + right) / 2;
+        int v = nums[mid];
+        TreeNode node = new TreeNode(v);
+
+        node.left  = buildBSTByArray1(nums, left, mid - 1);
+        node.right = buildBSTByArray1(nums, mid + 1, right);
+
+        return node;
+    }
+
+
+    public boolean evaluateTree(TreeNode root) {
+
+        if (root.left == null && root.right == null) {
+            return root.val == 1;
+        }
+
+        if (root.val == 2) {
+            return evaluateTree(root.left) || evaluateTree(root.right);
+        }
+
+        return evaluateTree(root.left) && evaluateTree(root.right);
+    }
+
+
+    /**
+     * 从跟到叶的二叉树之和
+     */
+    public int sumRootToLeaf(TreeNode root) {
+        return sumRootToLeafDfs(root, 0);
+    }
+
+    public int sumRootToLeafDfs(TreeNode node, int val){
+        if (node == null){
+            return 0;
+        }
+
+        val = val << 1 | node.val;
+        //叶子结点
+        if (node.left == null && node.right == null){
+            return val;
+        }
+
+        return sumRootToLeafDfs(node.left, val) + sumRootToLeafDfs(node.right, val);
+    }
+
+
+    /**
+     * 找二叉树的堂兄节点
+     */
+    public boolean isCousins(TreeNode root, int x, int y) {
+        if (root == null) {
+            return false;
+        }
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            boolean resX = false;
+            boolean resY = false;
+
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                if (node.val == x) {
+                    resX = true;
+                }
+                if (node.val == y) {
+                    resY = true;
+                }
+
+                if (node.left != null
+                        && node.right != null
+                        && node.left.val == x
+                && node.right.val == y) {
+                    return false;
+                }
+
+                if (node.left != null
+                        && node.right != null
+                        && node.right.val == x
+                        && node.left.val == y) {
+                    return false;
+                }
+
+
+                if (node.left != null) {
+                    queue.add(node.left);
+                }
+
+                if (node.right != null) {
+                    queue.add(node.right);
+                }
+            }
+
+
+            if(resX && resY) {
+                return true;
+            };
+        }
+
+        return false;
+    }
+
     /**
      * 938. 二叉搜索树的范围和
      * 给定二叉搜索树的根结点 root，返回值位于范围 [low, high] 之间的所有结点的值的和。
